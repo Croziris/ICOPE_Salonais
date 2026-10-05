@@ -1,7 +1,7 @@
 import React from 'react';
 import { Phone, Menu, User, Calendar, MapPin } from 'lucide-react';
 
-export default function Topbar({ patient, setPatient, communes = [], onToggleSidebar, showHamburger }) {
+export default function Topbar({ patient, setPatient, communes = [] as any[], onToggleSidebar, showHamburger }: any) {
   const handleChange = (field, value) => {
     setPatient((prev) => ({ ...prev, [field]: value }));
   };

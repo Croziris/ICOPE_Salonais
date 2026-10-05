@@ -84,7 +84,7 @@ export default function App() {
 
   const allSelectedCompleted =
     selectedDomains.size > 0 &&
-    [...selectedDomains].every((id) => completedDomains[id])
+    [...selectedDomains].every((id: any) => completedDomains[id])
 
   const canGenerateReport = patient.aRepondu && allSelectedCompleted
   

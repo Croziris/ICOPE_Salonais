@@ -30,7 +30,7 @@ const ReportModal = ({
     text += `Commune : ${communeName}\n`;
     text += `----------------------------------------\n\n`;
 
-    Object.entries(completedDomains).forEach(([domainId, result]) => {
+    Object.entries(completedDomains).forEach(([domainId, result]: [string, any]) => {
       const domaine = domaines.find(d => d.id === domainId);
       if (!domaine) return;
 
