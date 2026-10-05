@@ -1,0 +1,784 @@
+{
+  "app": {
+    "nom": "ICOPE Salonais",
+    "version": "4.1",
+    "description": "Plateforme de gestion téléphonique des alertes ICOPE – Conforme au CHU"
+  },
+  "communes": [
+    {
+      "id": "salon",
+      "nom": "Salon-de-Provence",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS Salon-de-Provence",
+          "tel": "04 90 56 85 69"
+        },
+        "plateforme_aidants": {
+          "nom": "Plateforme de répit Salon",
+          "tel": "04 XX XX XX XX"
+        },
+        "medecin_geriatre_astreinte": {
+          "nom": "Astreinte Gériatrique",
+          "tel": "06 XX XX XX XX"
+        }
+      }
+    },
+    {
+      "id": "grans",
+      "nom": "Grans",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS Grans",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "cornillon",
+      "nom": "Cornillon-Confoux",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "aurons",
+      "nom": "Aurons",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "pelissanne",
+      "nom": "Pélissanne",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "lancon",
+      "nom": "Lançon-de-Provence",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "lambesc",
+      "nom": "Lambesc",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "st_cannat",
+      "nom": "Saint-Cannat",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    },
+    {
+      "id": "la_barben",
+      "nom": "La Barben",
+      "ressources": {
+        "ccas": {
+          "nom": "CCAS",
+          "tel": ""
+        }
+      }
+    }
+  ],
+  "domaines_icope": [
+    {
+      "id": "mobilite",
+      "titre": "Mobilité",
+      "icone": "🚶",
+      "couleur": {
+        "hex": "#EF5350",
+        "hex_light": "#FEF2F2",
+        "classes": {
+          "bg": "bg-red-50",
+          "bg_accent": "bg-red-400",
+          "text": "text-red-700",
+          "border": "border-red-400"
+        }
+      },
+      "first_node": "mob_init",
+      "nodes": {
+        "mob_init": {
+          "texte": "Questions complémentaires (Cochez si OUI) :",
+          "type": "multiple_choice",
+          "allow_note": true,
+          "options": [
+            {
+              "id": "lenteur",
+              "label": "Marchez-vous plus lentement ?"
+            },
+            {
+              "id": "courses",
+              "label": "Avez-vous des difficultés à porter vos courses ?"
+            },
+            {
+              "id": "escalier",
+              "label": "Avez-vous des difficultés à monter un escalier ?"
+            },
+            {
+              "id": "lever",
+              "label": "Incapable de se lever seul d'une chaise sans aide ?"
+            }
+          ],
+          "next_if_any": "mob_nouveau",
+          "next_if_none": "mob_fausse"
+        },
+        "mob_nouveau": {
+          "texte": "Le problème est-il nouveau ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui (Problème nouveau)",
+              "next": "mob_alerte_vraie",
+              "severity": "danger"
+            },
+            {
+              "label": "Non (Problème ancien)",
+              "next": "mob_fausse",
+              "severity": "safe"
+            }
+          ]
+        },
+        "mob_alerte_vraie": {
+          "texte": "Alerte confirmée : Envoyer un mail au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Envoyer un mail au médecin traitant"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "mob_fausse": {
+          "texte": "Alerte non confirmée : Pas de contact avec le médecin traitant.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "nutrition",
+      "titre": "Nutrition",
+      "icone": "🍽️",
+      "couleur": {
+        "hex": "#84CC16",
+        "hex_light": "#F7FEE7",
+        "classes": {
+          "bg": "bg-lime-50",
+          "bg_accent": "bg-lime-500",
+          "text": "text-lime-700",
+          "border": "border-lime-500"
+        }
+      },
+      "first_node": "nutri_init",
+      "nodes": {
+        "nutri_init": {
+          "texte": "Questions complémentaires (Cochez si OUI) :",
+          "type": "multiple_choice",
+          "allow_note": true,
+          "options": [
+            {
+              "id": "quantite",
+              "label": "La perte d'appétit a-t-elle un impact sur les quantités consommées ?"
+            },
+            {
+              "id": "saute",
+              "label": "La personne saute-t-elle un ou des repas ?"
+            }
+          ],
+          "next_if_any": "nutri_alerte_vraie",
+          "next_if_none": "nutri_fausse"
+        },
+        "nutri_alerte_vraie": {
+          "texte": "Alerte confirmée : Envoyer un mail au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Envoyer un mail au médecin traitant"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "nutri_fausse": {
+          "texte": "Alerte non confirmée : Pas de contact avec le médecin traitant.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "psychologie",
+      "titre": "Humeur / Psychologie",
+      "icone": "🧠",
+      "couleur": {
+        "hex": "#F59E0B",
+        "hex_light": "#FFFBEB",
+        "classes": {
+          "bg": "bg-amber-50",
+          "bg_accent": "bg-amber-500",
+          "text": "text-amber-700",
+          "border": "border-amber-500"
+        }
+      },
+      "first_node": "psy_init",
+      "nodes": {
+        "psy_init": {
+          "texte": "Phase A - Confirmation du risque de dépression (Cochez si OUI) :",
+          "type": "multiple_choice",
+          "allow_note": true,
+          "options": [
+            {
+              "id": "deprime_15j",
+              "label": "Sensation de déprime : est-ce tous les jours depuis au moins 15 jours ?"
+            },
+            {
+              "id": "interet_impact",
+              "label": "Perte d'intérêt : est-ce qu'il y a un impact sur le fonctionnement quotidien ?"
+            }
+          ],
+          "next_if_any": "psy_phase_b",
+          "next_if_none": "psy_fausse"
+        },
+        "psy_phase_b": {
+          "texte": "Phase B - Évaluation du risque suicidaire (Cochez si OUI) :",
+          "type": "multiple_choice",
+          "allow_note": true,
+          "options": [
+            {
+              "id": "noires",
+              "label": "Avez-vous des idées noires ?"
+            },
+            {
+              "id": "mort",
+              "label": "Avez-vous des idées de mort ?"
+            },
+            {
+              "id": "souffrance",
+              "label": "Souffrez-vous au point de vouloir mettre fin à vos jours ?"
+            }
+          ],
+          "next_if_any": "psy_urgence",
+          "next_if_none": "psy_alerte_medecin"
+        },
+        "psy_urgence": {
+          "texte": "Évaluez la gravité du risque suicidaire de 0 (Faible) à 5 (Très Élevée) :",
+          "type": "slider",
+          "allow_note": true,
+          "min": 0,
+          "max": 5,
+          "next_thresholds": [
+            {
+              "max": 4,
+              "next": "psy_action_medecin",
+              "label": "Urgence Faible à Moyenne"
+            },
+            {
+              "max": 5,
+              "next": "psy_action_15",
+              "label": "Urgence Élevée"
+            }
+          ]
+        },
+        "psy_alerte_medecin": {
+          "texte": "Alerte confirmée (Dépression) : Envoyer un mail au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Envoyer un mail au médecin traitant"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "psy_action_medecin": {
+          "texte": "Alerte Vraie : Appel au gériatre d'astreinte ou au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "appel_medecin",
+              "label": "Appel au gériatre d'astreinte"
+            }
+          ],
+          "ressources_communes": [
+            "medecin_geriatre_astreinte"
+          ]
+        },
+        "psy_action_15": {
+          "texte": "URGENCE VITALE : Appel au 15 immédiatement.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "urgence",
+              "label": "Appeler le 15"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "psy_fausse": {
+          "texte": "Alerte non confirmée : Pas de contact avec le médecin traitant.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "cognition",
+      "titre": "Cognition",
+      "icone": "🧩",
+      "couleur": {
+        "hex": "#94A3B8",
+        "hex_light": "#F8FAFC",
+        "classes": {
+          "bg": "bg-slate-50",
+          "bg_accent": "bg-slate-400",
+          "text": "text-slate-700",
+          "border": "border-slate-400"
+        }
+      },
+      "first_node": "cog_init",
+      "nodes": {
+        "cog_init": {
+          "info_box": "RAPPEL : Si toutes les questions de la cognition sont justes sauf plaintes et/ou le jour du mois, il ne faut pas appeler, on peut considérer cela comme une fausse alerte.",
+          "texte": "Quel test initial a déclenché l'alerte sur la cognition ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Test de l'orientation (Date incorrecte)",
+              "next": "cog_impact",
+              "severity": "warning"
+            },
+            {
+              "label": "Test des 3 mots (Oubli)",
+              "next": "cog_3mots_date",
+              "severity": "danger"
+            }
+          ]
+        },
+        "cog_3mots_date": {
+          "texte": "Veuillez faire répéter 3 mots au patient (ex: Drapeau/Fleur/Porte). Ensuite, demandez-lui la date du jour.\nLa date donnée est-elle correcte ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui",
+              "next": "cog_3mots_rappel",
+              "severity": "safe"
+            },
+            {
+              "label": "Non",
+              "next": "cog_impact",
+              "severity": "warning"
+            }
+          ]
+        },
+        "cog_3mots_rappel": {
+          "texte": "Quelques minutes plus tard : Demandez maintenant au patient de redonner les 3 mots.\nA-t-il réussi ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui (Alerte levée)",
+              "next": "cog_fausse",
+              "severity": "safe"
+            },
+            {
+              "label": "Non (Échec)",
+              "next": "cog_impact",
+              "severity": "danger"
+            }
+          ]
+        },
+        "cog_impact": {
+          "texte": "Évaluation de l'impact auprès de l'entourage (Cochez si OUI) :",
+          "type": "multiple_choice",
+          "allow_note": true,
+          "options": [
+            {
+              "id": "recent",
+              "label": "Ces problèmes sont-ils récents (moins de 5 ans) ?"
+            },
+            {
+              "id": "inquiete_patient",
+              "label": "Vous inquiètent-ils ?"
+            },
+            {
+              "id": "inquiete_entourage",
+              "label": "Inquiètent-ils votre entourage ?"
+            },
+            {
+              "id": "consultation",
+              "label": "Justifient-ils pour vous ou votre entourage une consultation ?"
+            },
+            {
+              "id": "impact_iadl",
+              "label": "Y a-t-il un impact sur le quotidien (IADL) ?"
+            }
+          ],
+          "next_if_any": "cog_alerte_vraie",
+          "next_if_none": "cog_fausse"
+        },
+        "cog_alerte_vraie": {
+          "texte": "Alerte confirmée : Envoyer un mail au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Envoyer un mail au médecin traitant"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "cog_fausse": {
+          "texte": "Alerte non confirmée : Pas de contact avec le médecin traitant.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "vision",
+      "titre": "Vision",
+      "icone": "👁️",
+      "couleur": {
+        "hex": "#38BDF8",
+        "hex_light": "#F0F9FF",
+        "classes": {
+          "bg": "bg-sky-50",
+          "bg_accent": "bg-sky-400",
+          "text": "text-sky-700",
+          "border": "border-sky-400"
+        }
+      },
+      "first_node": "vis_init",
+      "nodes": {
+        "vis_init": {
+          "texte": "Le problème est-il en cours de prise en charge ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui",
+              "next": "vis_fausse",
+              "severity": "safe"
+            },
+            {
+              "label": "Non",
+              "next": "vis_alerte_vraie",
+              "severity": "danger"
+            }
+          ]
+        },
+        "vis_fausse": {
+          "texte": "Alerte non avérée : Ne pas contacter le médecin traitant.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        },
+        "vis_alerte_vraie": {
+          "texte": "Alerte confirmée : Envoyer un mail au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Envoyer un mail au médecin traitant"
+            }
+          ],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "audition",
+      "titre": "Audition",
+      "icone": "👂",
+      "couleur": {
+        "hex": "#A855F7",
+        "hex_light": "#FAF5FF",
+        "classes": {
+          "bg": "bg-purple-50",
+          "bg_accent": "bg-purple-500",
+          "text": "text-purple-700",
+          "border": "border-purple-500"
+        }
+      },
+      "first_node": "aud_init",
+      "nodes": {
+        "aud_init": {
+          "info_box": "RAPPEL : Si la baisse de l'audition est déclarée MAIS le test de chuchotement est NORMAL = Fausse alerte (Ne rien faire).\nSi le test est ANORMAL ou manquant = Posez la question ci-dessous.",
+          "texte": "Le problème est-il en cours de prise en charge ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui",
+              "next": "aud_fausse",
+              "severity": "safe"
+            },
+            {
+              "label": "Non",
+              "next": "aud_alerte_vraie",
+              "severity": "danger"
+            }
+          ]
+        },
+        "aud_fausse": {
+          "texte": "Alerte non avérée : Ne pas contacter le médecin traitant.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        },
+        "aud_alerte_vraie": {
+          "texte": "Alerte confirmée : Envoyer un mail au médecin traitant.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Envoyer un mail au médecin traitant"
+            }
+          ],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "social",
+      "titre": "Soutien Social",
+      "icone": "🤝",
+      "couleur": {
+        "hex": "#10B981",
+        "hex_light": "#ECFDF5",
+        "classes": {
+          "bg": "bg-emerald-50",
+          "bg_accent": "bg-emerald-500",
+          "text": "text-emerald-700",
+          "border": "border-emerald-500"
+        }
+      },
+      "first_node": "soc_init",
+      "nodes": {
+        "soc_init": {
+          "texte": "Le patient exprime-t-il un besoin d'aide pour les tâches quotidiennes ou des difficultés financières ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui, besoin d'aide",
+              "next": "soc_action",
+              "severity": "danger"
+            },
+            {
+              "label": "Non",
+              "next": "soc_ok",
+              "severity": "safe"
+            }
+          ]
+        },
+        "soc_action": {
+          "texte": "Alerte Vraie : Orienter vers le CCAS de la commune pour évaluation sociale.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "orientation_ccas",
+              "label": "Orienter vers CCAS"
+            }
+          ],
+          "ressources_communes": [
+            "ccas"
+          ]
+        },
+        "soc_ok": {
+          "texte": "Pas de besoin social identifié lors du triage.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "aidants",
+      "titre": "Soutien aux Aidants",
+      "icone": "🤲",
+      "couleur": {
+        "hex": "#F97316",
+        "hex_light": "#FFF7ED",
+        "classes": {
+          "bg": "bg-orange-50",
+          "bg_accent": "bg-orange-500",
+          "text": "text-orange-700",
+          "border": "border-orange-500"
+        }
+      },
+      "first_node": "aid_init",
+      "nodes": {
+        "aid_init": {
+          "texte": "L'aidant principal exprime-t-il un épuisement physique ou psychologique ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui",
+              "next": "aid_action",
+              "severity": "danger"
+            },
+            {
+              "label": "Non",
+              "next": "aid_ok",
+              "severity": "safe"
+            }
+          ]
+        },
+        "aid_action": {
+          "texte": "Alerte Vraie : Proposer des solutions de répit ou orienter vers une plateforme d'accompagnement des aidants.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "orientation_aidants",
+              "label": "Plateforme accompagnement aidants"
+            }
+          ],
+          "ressources_communes": [
+            "plateforme_aidants"
+          ]
+        },
+        "aid_ok": {
+          "texte": "Pas d'épuisement de l'aidant identifié.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    },
+    {
+      "id": "continence",
+      "titre": "Continence",
+      "icone": "💧",
+      "couleur": {
+        "hex": "#06B6D4",
+        "hex_light": "#ECFEFF",
+        "classes": {
+          "bg": "bg-cyan-50",
+          "bg_accent": "bg-cyan-500",
+          "text": "text-cyan-700",
+          "border": "border-cyan-500"
+        }
+      },
+      "first_node": "cont_init",
+      "nodes": {
+        "cont_init": {
+          "texte": "Le patient signale-t-il des fuites urinaires récentes ou non traitées ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui",
+              "next": "cont_infection",
+              "severity": "danger"
+            },
+            {
+              "label": "Non",
+              "next": "cont_ok",
+              "severity": "safe"
+            }
+          ]
+        },
+        "cont_infection": {
+          "texte": "S'accompagne-t-il de brûlures mictionnelles ou de fièvre (suspicion infection) ?",
+          "type": "question",
+          "allow_note": true,
+          "options": [
+            {
+              "label": "Oui",
+              "next": "cont_action_inf",
+              "severity": "danger"
+            },
+            {
+              "label": "Non",
+              "next": "cont_action_med",
+              "severity": "warning"
+            }
+          ]
+        },
+        "cont_action_inf": {
+          "texte": "Urgence potentielle (Infection urinaire). Contacter le médecin traitant aujourd'hui.",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Contacter médecin traitant (aujourd'hui)"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "cont_action_med": {
+          "texte": "Alerte Vraie : Orienter vers médecin traitant pour bilan (ECBU, rééducation périnéale).",
+          "type": "conclusion",
+          "status": "VRAIE",
+          "actions": [
+            {
+              "type": "mail_medecin",
+              "label": "Orienter médecin (bilan)"
+            }
+          ],
+          "ressources_communes": []
+        },
+        "cont_ok": {
+          "texte": "Pas de problème de continence avéré.",
+          "type": "conclusion",
+          "status": "FAUSSE",
+          "actions": [],
+          "ressources_communes": []
+        }
+      }
+    }
+  ]
+}
