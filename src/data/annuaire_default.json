@@ -1,0 +1,178 @@
+[
+  {
+    "id": "ccas_salon",
+    "nom": "CCAS Salon-de-Provence",
+    "communes": "Salon-de-Provence",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 90 17 01 93",
+    "email": "info@ccas-salon-de-provence.org",
+    "adresse": "65 Avenue Michelet, 13300 Salon-de-Provence",
+    "description": "Centre Communal d'Action Sociale de Salon-de-Provence"
+  },
+  {
+    "id": "pis_bassin",
+    "nom": "Pôle Info Sénior (PIS)",
+    "communes": "Salon-de-Provence, Aurons, Pélissanne, La Barben, Lambesc, Lançon-de-Provence, Grans, Cornillon-Confoux",
+    "categorie": "pole_info_senior",
+    "domaines": ["Social"],
+    "telephone": "04 90 44 13 17",
+    "email": "clic.alliage@orange.fr",
+    "adresse": "39 rue Saint-François, 13300 Salon-de-Provence",
+    "description": "Information, orientation et coordination pour les séniors (Attention: ne couvre pas Saint-Cannat)"
+  },
+  {
+    "id": "oasis_aidants",
+    "nom": "Plateforme de répit L'Oasis",
+    "communes": "Salon-de-Provence, Aurons, Pélissanne, La Barben, Saint-Cannat, Lambesc, Lançon-de-Provence",
+    "categorie": "plateforme_aidants",
+    "domaines": ["Aidants"],
+    "telephone": "04 87 33 71 49",
+    "email": "pfroasis@jcmsante.com",
+    "adresse": "",
+    "description": "Plateforme d'accompagnement et de répit pour les proches aidants"
+  },
+  {
+    "id": "saj_aidants",
+    "nom": "Plateforme de répit PH – SAJ",
+    "communes": "Salon-de-Provence, Pélissanne, La Barben, Saint-Cannat, Lançon-de-Provence",
+    "categorie": "plateforme_aidants",
+    "domaines": ["Aidants"],
+    "telephone": "04 91 44 07 73 (taper 2)",
+    "email": "",
+    "adresse": "",
+    "description": "Plateforme de répit PH - Service d'Accueil de Jour"
+  },
+  {
+    "id": "maillon_aidants",
+    "nom": "Plateforme de répit Le Maillon",
+    "communes": "Grans, Cornillon-Confoux",
+    "categorie": "plateforme_aidants",
+    "domaines": ["Aidants"],
+    "telephone": "07 70 44 04 52",
+    "email": "psychologueplateforme@lemailon.net",
+    "adresse": "",
+    "description": "Plateforme d'accompagnement et de répit des aidants pour Grans et Cornillon-Confoux"
+  },
+  {
+    "id": "cafe_aidants",
+    "nom": "Café des Aidants",
+    "communes": "Bassin Salonais",
+    "categorie": "cafe_aidants",
+    "domaines": ["Aidants"],
+    "telephone": "04 90 44 13 17 / 04 90 42 98 17",
+    "email": "",
+    "adresse": "Salon-de-Provence / Lançon-de-Provence",
+    "description": "Lieu d'échange et d'information pour les aidants (Salon: 04.90.44.13.17 / Lançon: 04.90.42.98.17)"
+  },
+  {
+    "id": "mss_ouest",
+    "nom": "La Maison Sport Santé (Secteur Salon / Ouest)",
+    "communes": "Salon-de-Provence, Lançon-de-Provence, Grans, Cornillon-Confoux",
+    "categorie": "maison_sport_sante",
+    "domaines": ["Mobilité", "Social"],
+    "telephone": "07 83 68 21 72",
+    "email": "mss.pays.salonais@gmail.com",
+    "adresse": "",
+    "description": "Accompagnement à l'activité physique adaptée (Mobilité + Social)"
+  },
+  {
+    "id": "mss_est",
+    "nom": "La Maison Sport Santé (Secteur Nord / Est)",
+    "communes": "Aurons, Pélissanne, La Barben, Saint-Cannat, Lambesc",
+    "categorie": "maison_sport_sante",
+    "domaines": ["Mobilité", "Social"],
+    "telephone": "07 64 82 77 68",
+    "email": "contact@miss-13.com",
+    "adresse": "",
+    "description": "Accompagnement à l'activité physique adaptée (Mobilité + Social)"
+  },
+  {
+    "id": "ccas_pelissanne",
+    "nom": "CCAS Pélissanne (dessert aussi Aurons et La Barben)",
+    "communes": "Pélissanne, Aurons, La Barben",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 90 55 76 09",
+    "email": "ccas@ville-pelissanne.fr",
+    "adresse": "Parc Roux de Brignoles, 13330 Pélissanne",
+    "description": "CCAS de Pélissanne (compétent également pour les habitants d'Aurons et La Barben)"
+  },
+  {
+    "id": "ccas_st_cannat",
+    "nom": "CCAS Saint-Cannat",
+    "communes": "Saint-Cannat",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 42 50 82 26",
+    "email": "action.sociale@ville-saint-cannat.fr",
+    "adresse": "12 ter avenue Camille Pelletan, 13760 Saint-Cannat",
+    "description": "Service Action Sociale / CCAS de Saint-Cannat"
+  },
+  {
+    "id": "ccas_lambesc",
+    "nom": "CCAS Lambesc",
+    "communes": "Lambesc",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 42 17 00 53",
+    "email": "ccas@lambesc.fr",
+    "adresse": "Place du Parage, 13410 Lambesc",
+    "description": "CCAS de Lambesc"
+  },
+  {
+    "id": "ccas_lancon",
+    "nom": "CCAS Lançon-de-Provence",
+    "communes": "Lançon-de-Provence",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 90 42 98 17",
+    "email": "ccas@lancon-provence.fr",
+    "adresse": "Hôtel de Ville, Place du Champ de Mars, 13680 Lançon-Provence",
+    "description": "CCAS de Lançon-de-Provence"
+  },
+  {
+    "id": "ccas_grans",
+    "nom": "CCAS Grans",
+    "communes": "Grans",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 90 55 99 75",
+    "email": "ccas@grans.fr",
+    "adresse": "Boulevard Victor Jauffret, 13450 Grans",
+    "description": "CCAS de Grans"
+  },
+  {
+    "id": "ccas_cornillon",
+    "nom": "CCAS Cornillon-Confoux",
+    "communes": "Cornillon-Confoux",
+    "categorie": "ccas",
+    "domaines": ["Social"],
+    "telephone": "04 90 50 45 91",
+    "email": "mairie@cornillonconfoux.fr",
+    "adresse": "Hôtel de Ville, Place Bruno Carsignol, 13250 Cornillon-Confoux",
+    "description": "CCAS / Mairie de Cornillon-Confoux"
+  },
+  {
+    "id": "geriatre_astreinte",
+    "nom": "Astreinte Gériatrique",
+    "communes": "Bassin Salonais",
+    "categorie": "medecin_geriatre_astreinte",
+    "domaines": ["Humeur", "Psychologie", "Triage"],
+    "telephone": "06 XX XX XX XX",
+    "email": "",
+    "adresse": "Centre Hospitalier de Salon-de-Provence",
+    "description": "Médecin gériatre d'astreinte territoriale pour avis et orientation"
+  },
+  {
+    "id": "mon_soutien_psy",
+    "nom": "Dispositif Mon Soutien Psy",
+    "communes": "Bassin Salonais",
+    "categorie": "psychologie",
+    "domaines": ["Humeur", "Psychologie"],
+    "telephone": "",
+    "email": "",
+    "adresse": "Bassin Salonais",
+    "description": "Dispositif de remboursement de séances d'accompagnement psychologique (professionnels partenaires du territoire)"
+  }
+]

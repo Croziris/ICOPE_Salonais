@@ -1,10 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { getRessourcesForAlert, RessourceAnnuaire } from '../services/annuaireService';
+import { Phone, Mail, Copy, Check } from 'lucide-react';
 
-export default function ConclusionCard({ node, patient, communes, onFinalStatusChange }) {
+export default function ConclusionCard({
+  node,
+  patient,
+  communes,
+  onFinalStatusChange,
+  annuaireRessources = []
+}: {
+  node: any;
+  patient: any;
+  communes: any[];
+  onFinalStatusChange?: (status: string) => void;
+  annuaireRessources?: RessourceAnnuaire[];
+}) {
   const [praticienStatus, setPraticienStatus] = useState(null); // null, 'VRAIE', 'FAUSSE'
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   
-  const isAlgoVraie = node.status === 'VRAIE';
-  const commune = communes.find(c => c.id === patient?.commune);
+  const commune = Array.isArray(communes) 
+    ? communes.find(c => c.id === patient?.commune || c.nom === patient?.commune) 
+    : null;
 
   const currentStatus = praticienStatus || node.status;
   const isVraie = currentStatus === 'VRAIE';
@@ -15,6 +31,19 @@ export default function ConclusionCard({ node, patient, communes, onFinalStatusC
       onFinalStatusChange(currentStatus);
     }
   }, [currentStatus, onFinalStatusChange]);
+
+  const handleCopy = (key: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(null), 2000);
+  };
+
+  // Récupération des ressources enrichies
+  const matchingAnnuaireRessources = getRessourcesForAlert(
+    patient?.commune,
+    node.ressources_communes || [],
+    annuaireRessources
+  );
 
   return (
     <div className={`rounded-xl p-6 border-2 shadow-sm transition-colors duration-300 ${isVraie ? 'bg-red-50 border-red-300' : 'bg-green-50 border-green-300'}`}>
@@ -46,21 +75,71 @@ export default function ConclusionCard({ node, patient, communes, onFinalStatusC
         </div>
       )}
 
-      {isVraie && commune && node.ressources_communes && node.ressources_communes.length > 0 && (
+      {isVraie && node.ressources_communes && node.ressources_communes.length > 0 && (
         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm mt-5">
-          <p className="text-sm font-semibold text-gray-800 mb-3 uppercase tracking-wider">📞 Ressources pour {commune.nom} :</p>
-          <div className="space-y-3">
-            {node.ressources_communes.map((resKey, i) => {
-              const resInfo = commune.ressources?.[resKey];
-              if (!resInfo || (!resInfo.nom && !resInfo.tel)) return null;
-              return (
-                <div key={i} className="text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 hover:bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-700">{resInfo.nom || resKey}</span>
-                  {resInfo.tel && <span className="text-[#243884] font-bold mt-1 sm:mt-0">{resInfo.tel}</span>}
+          <p className="text-sm font-semibold text-gray-800 mb-3 uppercase tracking-wider flex items-center justify-between">
+            <span>📞 Ressources recommandées pour {commune?.nom || 'le patient'} :</span>
+            <span className="text-xs normal-case text-gray-500 font-normal">CPTS Pays Salonais</span>
+          </p>
+
+          {matchingAnnuaireRessources.length > 0 ? (
+            <div className="space-y-2.5">
+              {matchingAnnuaireRessources.map((res, i) => (
+                <div key={i} className="p-3 bg-gray-50 hover:bg-gray-100/80 rounded-xl border border-gray-200/70 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                  <div>
+                    <span className="font-bold text-gray-900 text-sm block">{res.nom}</span>
+                    <span className="text-xs text-gray-500 block">
+                      📍 {res.communes} {res.description ? `• ${res.description}` : ''}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    {res.telephone && (
+                      <div className="flex items-center gap-1.5 bg-white border border-gray-200 px-2.5 py-1.5 rounded-lg shadow-2xs">
+                        <a 
+                          href={`tel:${res.telephone.replace(/[^0-9+]/g, '')}`} 
+                          className="text-[#243884] font-bold text-sm hover:underline flex items-center gap-1"
+                        >
+                          <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                          {res.telephone}
+                        </a>
+                        <button
+                          onClick={() => handleCopy(`tel_${i}`, res.telephone)}
+                          className="p-1 hover:bg-gray-100 rounded text-gray-500 cursor-pointer"
+                          title="Copier le numéro"
+                        >
+                          {copiedKey === `tel_${i}` ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                    )}
+                    {res.email && (
+                      <a 
+                        href={`mailto:${res.email}`} 
+                        className="p-1.5 bg-white border border-gray-200 hover:bg-gray-50 text-blue-700 rounded-lg text-xs font-medium flex items-center gap-1"
+                        title={res.email}
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          ) : (
+            /* Fallback si aucune ressource dynamique trouvée */
+            <div className="space-y-2">
+              {node.ressources_communes.map((resKey: string, i: number) => {
+                const resInfo = commune?.ressources?.[resKey];
+                if (!resInfo || (!resInfo.nom && !resInfo.tel)) return null;
+                return (
+                  <div key={i} className="text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 hover:bg-gray-50 rounded-lg">
+                    <span className="font-medium text-gray-700">{resInfo.nom || resKey}</span>
+                    {resInfo.tel && <span className="text-[#243884] font-bold mt-1 sm:mt-0">{resInfo.tel}</span>}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 

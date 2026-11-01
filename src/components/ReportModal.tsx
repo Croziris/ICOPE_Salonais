@@ -1,5 +1,6 @@
 import React from 'react';
 import { FileText, Copy, XCircle, Check } from 'lucide-react';
+import { getRessourcesForAlert, RessourceAnnuaire } from '../services/annuaireService';
 
 const ReportModal = ({
   patient,
@@ -7,11 +8,20 @@ const ReportModal = ({
   completedDomains,
   domaines,
   onClose,
-  onReset
+  onReset,
+  annuaireRessources = []
+}: {
+  patient: any;
+  communes: any[];
+  completedDomains: any;
+  domaines: any[];
+  onClose: () => void;
+  onReset: () => void;
+  annuaireRessources?: RessourceAnnuaire[];
 }) => {
   const [copied, setCopied] = React.useState(false);
 
-  const communeName = communes.find(c => c.id === patient?.commune)?.nom || '---';
+  const communeName = communes.find(c => c.id === patient?.commune || c.nom === patient?.commune)?.nom || patient?.commune || '---';
 
   const generateReportText = () => {
     const today = new Date();
@@ -56,15 +66,28 @@ const ReportModal = ({
       }
 
       if (result.ressources_communes && result.ressources_communes.length > 0) {
-        const communeObj = communes.find(c => c.id === patient?.commune);
-        if (communeObj && communeObj.ressources) {
-          text += `  📞 Ressources utiles (${communeObj.nom}) :\n`;
-          result.ressources_communes.forEach(resKey => {
-            const resInfo = communeObj.ressources[resKey];
-            if (resInfo && (resInfo.nom || resInfo.tel)) {
-               text += `    - ${resInfo.nom || resKey} : ${resInfo.tel || 'Non renseigné'}\n`;
-            }
+        const matchingRes = getRessourcesForAlert(
+          patient?.commune,
+          result.ressources_communes,
+          annuaireRessources
+        );
+
+        if (matchingRes.length > 0) {
+          text += `  📞 Ressources utiles (${communeName}) :\n`;
+          matchingRes.forEach(r => {
+            text += `    - ${r.nom} : ${r.telephone || 'Contact non renseigné'}${r.email ? ` (${r.email})` : ''}\n`;
           });
+        } else {
+          const communeObj = communes.find(c => c.id === patient?.commune || c.nom === patient?.commune);
+          if (communeObj && communeObj.ressources) {
+            text += `  📞 Ressources utiles (${communeObj.nom}) :\n`;
+            result.ressources_communes.forEach(resKey => {
+              const resInfo = communeObj.ressources[resKey];
+              if (resInfo && (resInfo.nom || resInfo.tel)) {
+                 text += `    - ${resInfo.nom || resKey} : ${resInfo.tel || 'Non renseigné'}\n`;
+              }
+            });
+          }
         }
       }
       text += `\n`;
