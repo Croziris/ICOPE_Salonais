@@ -136,7 +136,7 @@ export default function App() {
   const showHamburger = !sidebarOpen;
 
   return (
-    <div className="flex min-h-screen bg-[#FFFFFF]">
+    <div className="flex min-h-screen bg-[#FFFFFF] w-full max-w-full overflow-x-hidden">
       <Sidebar
         onNewCall={handleNewCall}
         activeCallExists={callStep !== 'idle'}
@@ -148,7 +148,7 @@ export default function App() {
         onSelectView={setActiveView}
       />
 
-      <div className={`flex-1 transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'lg:ml-0' : 'lg:ml-64'}`}>
+      <div className={`flex-1 min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'lg:ml-0' : 'lg:ml-64'}`}>
         
         {/* VUE : ANNUAIRE DES RESSOURCES */}
         {activeView === 'annuaire' && (
