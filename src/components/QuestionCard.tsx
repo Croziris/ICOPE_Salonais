@@ -5,8 +5,8 @@ export default function QuestionCard({
   node, step, index, status,
   note, onNoteChange, onAnswer, onGoBack,
   domainColor
-}) {
-  const [selectedIds, setSelectedIds] = useState([]);
+}: any) {
+  const [selectedIds, setSelectedIds] = useState<any[]>([]);
   const [sliderVal, setSliderVal] = useState(node?.min || 0);
 
   const severityStyles = {

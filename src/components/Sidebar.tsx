@@ -4,7 +4,18 @@ import { Plus, AlertTriangle, BookOpen, ClipboardList, X, PanelLeftClose } from 
 export default function Sidebar({
   onNewCall, activeCallExists,
   isOpen, onClose,
-  isCollapsed, onToggleCollapse
+  isCollapsed, onToggleCollapse,
+  activeView = 'alerts',
+  onSelectView
+}: {
+  onNewCall: () => void;
+  activeCallExists: boolean;
+  isOpen: boolean;
+  onClose: () => void;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
+  activeView?: 'alerts' | 'annuaire';
+  onSelectView?: (view: 'alerts' | 'annuaire') => void;
 }) {
   return (
     <>
@@ -56,15 +67,37 @@ export default function Sidebar({
         </div>
 
         <nav className="flex-1 space-y-1.5 p-4 pt-0 overflow-y-auto">
-          <a href="#" className="flex items-center gap-3 px-4 py-3.5 bg-blue-800 rounded-xl text-white font-medium shadow-inner">
+          <button
+            onClick={() => {
+              if (onSelectView) onSelectView('alerts');
+              onClose();
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium transition-all cursor-pointer text-left ${
+              activeView === 'alerts'
+                ? 'bg-blue-800 text-white shadow-inner font-bold'
+                : 'text-blue-100 hover:bg-white/10 hover:text-white'
+            }`}
+          >
             <AlertTriangle className="w-5 h-5 text-blue-300" />
             Gestion des alertes
-          </a>
-          <div className="flex items-center gap-3 px-4 py-3.5 opacity-50 cursor-not-allowed text-blue-200">
-            <BookOpen className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={() => {
+              if (onSelectView) onSelectView('annuaire');
+              onClose();
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium transition-all cursor-pointer text-left ${
+              activeView === 'annuaire'
+                ? 'bg-blue-800 text-white shadow-inner font-bold'
+                : 'text-blue-100 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <BookOpen className="w-5 h-5 text-blue-300" />
             Annuaire
-          </div>
-          <div className="flex items-center gap-3 px-4 py-3.5 opacity-50 cursor-not-allowed text-blue-200">
+          </button>
+
+          <div className="flex items-center gap-3 px-4 py-3.5 opacity-40 cursor-not-allowed text-blue-200">
             <ClipboardList className="w-5 h-5" />
             Step 2
           </div>

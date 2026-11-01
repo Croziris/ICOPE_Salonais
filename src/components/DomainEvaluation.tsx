@@ -3,7 +3,21 @@ import { ArrowLeft } from 'lucide-react';
 import QuestionCard from './QuestionCard';
 import ConclusionCard from './ConclusionCard';
 
-export default function DomainEvaluation({ domaine, patient, communes, onClose, onComplete }) {
+export default function DomainEvaluation({ 
+  domaine, 
+  patient, 
+  communes, 
+  onClose, 
+  onComplete,
+  annuaireRessources = []
+}: {
+  domaine: any;
+  patient: any;
+  communes: any[];
+  onClose: () => void;
+  onComplete: (data: any) => void;
+  annuaireRessources?: any[];
+}) {
   const [currentNodeId, setCurrentNodeId] = useState(domaine.first_node);
   const [history, setHistory] = useState([]);
   const [currentNote, setCurrentNote] = useState('');
@@ -128,6 +142,7 @@ export default function DomainEvaluation({ domaine, patient, communes, onClose, 
               patient={patient}
               communes={communes}
               onFinalStatusChange={setFinalStatus}
+              annuaireRessources={annuaireRessources}
             />
           )}
           
